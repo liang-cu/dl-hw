@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
-n_epochs = 1
+n_epochs = 30
 
 batch_size_train = 64
 batch_size_test = 64
