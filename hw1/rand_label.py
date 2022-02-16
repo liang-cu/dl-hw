@@ -12,7 +12,7 @@ from torchvision.transforms import ToTensor
 
 
 
-n_epochs = 300
+n_epochs = 1000
 
 batch_size_train = 64
 batch_size_test = 1000
