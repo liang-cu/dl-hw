@@ -1,3 +1,4 @@
+
 # dl-hw
 
 HW1 
@@ -11,4 +12,33 @@ HW1.1
 
 HW1.2
 
-(1) function2.py  and mnist2.py are for question 1.2
+(1) function2.py  and mnist2.py are for question 1.2 (1) and (2)
+
+(1) Visualize the optimization process.
+(2) Observe gradient norm during training.
+It will display the PCA results by default when it finish. It will display the gradient norm when you close the first figure.
+
+(3)mini_ratio.py is for 1.2 (3)
+
+
+
+HW1.3
+
+(1) random label
+
+rand_label.py 
+
+
+(2) Number of parameters
+
+number_parameter.py
+
+(3) Flatness v.s. Generalization
+
+part 1
+
+mnist_interpolation.py
+
+part 2
+
+sensi.py
