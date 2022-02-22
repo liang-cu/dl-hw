@@ -31,20 +31,6 @@ y = torch.sin(x)/x
 x = x.reshape((len(x), 1))
 y = y.reshape((len(y), 1))
 
-#model0 = torch.nn.Sequential(
-#    torch.nn.Linear(1, 5),
-#    torch.nn.Linear(5, 10),
-#    torch.nn.Linear(10, 10),
-#    torch.nn.Linear(10, 10),
-#    torch.nn.Linear(10, 10),
-#    torch.nn.Linear(10, 10),
-#    torch.nn.ReLU(),
-#    torch.nn.Linear(10,5),
-#    torch.nn.Linear(5,1)
-#
-#
-#)
-#
 class Net0(nn.Module):
     def __init__(self):
         super(Net0, self).__init__()
@@ -75,13 +61,10 @@ optimizer = optim.SGD(model0.parameters(), lr=learning_rate,
 
 print('model0',model0)
 
-#for parameter in model0.parameters():
-#    print('model0 parameter',parameter)
 print('model0 paramters', count_parameters(model0))
 
 # use Mean Squared Error (MSE) as loss function.
 loss_fn = torch.nn.MSELoss(reduction='sum')
-
 
 
 

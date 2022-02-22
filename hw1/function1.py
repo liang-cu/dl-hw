@@ -13,9 +13,11 @@ def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 # Create Tensors to hold input and outputs.
-
+# for sin(x) simulation 
 #x = torch.linspace(-math.pi, math.pi, 2000)
 #y = torch.sin(x)
+
+# for sin(x)/x simulation 
 x = torch.linspace(0.1*math.pi, 3*math.pi, 2000)
 y = torch.sin(x)/x
 

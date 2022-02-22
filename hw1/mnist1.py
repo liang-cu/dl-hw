@@ -162,30 +162,6 @@ test_losses = []
 test_counter = [i*len(train_loader.dataset) for i in range(n_epochs + 1)]
 
 
-#def train(epoch):
-#  trainCorrect0 = 0
-#  model0.train()
-#  for batch_idx, (data, target) in enumerate(train_loader):
-#    optimizer.zero_grad()
-#    output = model0(data)
-#    loss = F.nll_loss(output, target)
-#    loss.backward()
-#    trainCorrect0 += (output.argmax(1) == target).type(torch.float).sum().item()
-#      #print ('train correct', trainCorrect)
-#    trainCorrect0 = trainCorrect0 / len(train_loader.dataset)
-#
-#    optimizer.step()
-#    if batch_idx % log_interval == 0:
-#      print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-#        epoch, batch_idx * len(data), len(train_loader.dataset),
-#        100. * batch_idx / len(train_loader), loss.item()))
-#    train_losses.append(loss.item())
-#    train_counter.append(
-#        (batch_idx*64) + ((epoch-1)*len(train_loader.dataset)))
-#    train_accuracy0.append(100.*trainCorrect0)
-#
-
-
 def test():
   model0.eval()
   test_loss = 0

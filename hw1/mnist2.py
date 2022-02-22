@@ -124,6 +124,7 @@ for epoch in range(1, n_epochs + 1):
                grad = (p.grad.cpu().data.numpy() ** 2).sum()
            grad_all += grad
       grad_norm = grad_all ** 0.5
+      #print("grad",grad_norm)
       grad_norm_all.append(grad_norm)
       train_losses.append(loss.item())
 

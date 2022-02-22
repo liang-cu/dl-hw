@@ -8,14 +8,9 @@ import torch.optim as optim
 import numpy as np
 
 
-n_epochs = 30
-batch_sizes = [64, 256, 512, 1024, 2048]
-batch_size0 = 64
-batch_size1 = 256
-batch_size2 = 512
-batch_size3 = 1024
-batch_size4 = 2048 
-learning_rate = 1e-3
+n_epochs = 20
+batch_sizes = [32, 128, 512, 2048, 8192]
+learning_rate = 1e-2
 momentum = 0.5
 log_interval = 10000
 
@@ -32,7 +27,7 @@ train_loader0 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size0, shuffle=True)
+  batch_size=batch_sizes[0], shuffle=True)
 
 train_loader1 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=True, download=True,
@@ -41,7 +36,7 @@ train_loader1 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size1, shuffle=True)
+  batch_size=batch_sizes[1], shuffle=True)
 
 train_loader2 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=True, download=True,
@@ -50,7 +45,7 @@ train_loader2 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size2, shuffle=True)
+  batch_size=batch_sizes[2], shuffle=True)
 
 train_loader3 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=True, download=True,
@@ -59,7 +54,7 @@ train_loader3 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size3, shuffle=True)
+  batch_size=batch_sizes[3], shuffle=True)
 
 train_loader4 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=True, download=True,
@@ -68,7 +63,7 @@ train_loader4 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size4, shuffle=True)
+  batch_size=batch_sizes[4], shuffle=True)
 
 test_loader0 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=False, download=True,
@@ -77,7 +72,7 @@ test_loader0 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size0, shuffle=True)
+  batch_size=batch_sizes[0], shuffle=True)
 
 test_loader1 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=False, download=True,
@@ -86,7 +81,7 @@ test_loader1 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size1, shuffle=True)
+  batch_size=batch_sizes[1], shuffle=True)
 
 test_loader2 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=False, download=True,
@@ -95,7 +90,7 @@ test_loader2 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size2, shuffle=True)
+  batch_size=batch_sizes[2], shuffle=True)
 
 test_loader3 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=False, download=True,
@@ -104,7 +99,7 @@ test_loader3 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size3, shuffle=True)
+  batch_size=batch_sizes[3], shuffle=True)
 
 test_loader4 = torch.utils.data.DataLoader(
   torchvision.datasets.MNIST('./files/', train=False, download=True,
@@ -113,7 +108,7 @@ test_loader4 = torch.utils.data.DataLoader(
                                torchvision.transforms.Normalize(
                                  (0.1307,), (0.3081,))
                              ])),
-  batch_size=batch_size4, shuffle=True)
+  batch_size=batch_sizes[4], shuffle=True)
 
 class Net0(nn.Module):
     def __init__(self):
@@ -306,30 +301,36 @@ for epoch in range(1, n_epochs + 1):
 train_acc = [correct / len(train_loader0.dataset) for correct in train_correct]
 test_acc = [correct / len(test_loader0.dataset) for correct in test_correct]
 
+x = np.arange(0, len(batch_sizes))
 
 fig = plt.figure()
-plt.plot(batch_sizes, train_losses, color='blue')
-plt.plot(batch_sizes, test_losses, color='red')
-plt.plot(batch_sizes, sensits, color='green')
-plt.legend(['train loss','test loss','sensitivity'], loc='upper right')
-plt.xlabel('batch size')
-plt.ylabel('negative log likelihood loss')
-fig
-plt.show()
+ax = fig.add_subplot(111)
+ax.plot(train_losses,'b', label = 'train_loss')
+ax.plot(test_losses,'r', label = 'test_loss')
+ax2 = ax.twinx()
+ax2.plot(sensits,'g--', label = 'sensitivity')
+ax.legend(loc=2)
 
+ax.set_xlabel("batch size")
+ax.set_ylabel("negative log likelihood loss")
+ax2.set_ylabel("sensitivity")
+ax2.legend(loc=1)
+plt.xticks(x, batch_sizes)
+plt.show()
 
 fig = plt.figure()
-plt.plot(batch_sizes, train_acc, color='blue')
-plt.plot(batch_sizes, test_acc, color='red')
-plt.plot(batch_sizes, sensits, color='green')
-plt.legend(['train accuracy','test accuracy','sensitivity'], loc='upper right')
-plt.xlabel('batch size')
-plt.ylabel('accuracy')
-fig
+ax = fig.add_subplot(111)
+ax.plot(train_acc,'b', label = 'train_acc')
+ax.plot(test_acc,'r', label = 'test_acc')
+ax2 = ax.twinx()
+ax2.plot(sensits,'g--', label = 'sensitivity')
+ax.legend(loc=2)
+ax.set_xlabel("batch size")
+ax.set_ylabel("accuracy")
+ax2.set_ylabel("sensitivity")
+ax2.legend(loc=1)
+plt.xticks(x, batch_sizes)
 plt.show()
-
-
-
 
 
 
